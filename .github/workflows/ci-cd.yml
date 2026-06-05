@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Verify required files exist
         run: |
           test -f index.html && echo "✅ index.html found" || (echo "❌ index.html missing" && exit 1)
@@ -23,7 +23,7 @@ jobs:
     needs: build
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Validate HTML structure
         run: |
           grep -q "<!DOCTYPE html>" index.html && echo "✅ DOCTYPE found" || (echo "❌ DOCTYPE missing" && exit 1)
@@ -39,7 +39,7 @@ jobs:
     needs: test
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build artifact
         run: |
           mkdir -p build
@@ -47,7 +47,7 @@ jobs:
           cp app.js     build/
           cp style.css  build/
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: web-app
           path: build/
@@ -64,7 +64,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Prepare pages content
         run: |
           mkdir -p build
@@ -72,11 +72,11 @@ jobs:
           cp app.js     build/
           cp style.css  build/
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5
       - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: build/
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
